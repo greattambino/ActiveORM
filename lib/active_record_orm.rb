@@ -1,0 +1,6 @@
+require 'active_support/inflector'
+require_relative './active_support_patches'
+require_relative './active_record_base'
+require_relative './associatable'
+require_relative './db_connection'
+require_relative './searchable'

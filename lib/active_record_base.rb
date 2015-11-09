@@ -70,6 +70,15 @@ class ActiveRecordBase
     self.parse_all(results).first
   end
 
+  def self.my_attr_accessor(*attributes)
+    @attributes = attributes
+    attr_accessor *attributes
+  end
+
+  def self.attributes
+    @attributes || []
+  end
+  
   def initialize(params = {})
     params.each do |attr_name, val|
       sym = attr_name.to_sym
