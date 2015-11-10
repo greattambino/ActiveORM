@@ -2,10 +2,14 @@ require 'sqlite3'
 
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '..')
-CATS_SQL_FILE = File.join(ROOT_FOLDER, 'cats.sql')
-CATS_DB_FILE = File.join(ROOT_FOLDER, 'cats.db')
+CATS_SQL_FILE = File.join(ROOT_FOLDER, '../db/cats.sql')
+CATS_DB_FILE = File.join(ROOT_FOLDER, '../db/cats.sqlite3')
 
 class DBConnection
+  def self.db
+    @db
+  end
+
   def self.open(db_file_name)
     @db = SQLite3::Database.new(db_file_name)
     @db.results_as_hash = true
@@ -31,13 +35,13 @@ class DBConnection
   end
 
   def self.execute(*args)
-    puts args[0]
+    # puts args[0]
 
     instance.execute(*args)
   end
 
   def self.execute2(*args)
-    puts args[0]
+    # puts args[0]
 
     instance.execute2(*args)
   end

@@ -58,7 +58,7 @@ class ActiveRecordBase
   end
 
   def self.find(id)
-    results = DBConnection.execute(<<-SQL, id)
+    query = <<-SQL
       SELECT
         #{table_name}.*
       FROM
@@ -67,18 +67,12 @@ class ActiveRecordBase
         id = ?;
     SQL
 
+    puts "[QUERY] \n#{query} => #{id}" if ENV['DEBUG']
+
+    results = DBConnection.execute(query, id)
     self.parse_all(results).first
   end
 
-  def self.my_attr_accessor(*attributes)
-    @attributes = attributes
-    attr_accessor *attributes
-  end
-
-  def self.attributes
-    @attributes || []
-  end
-  
   def initialize(params = {})
     params.each do |attr_name, val|
       sym = attr_name.to_sym

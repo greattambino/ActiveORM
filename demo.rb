@@ -4,34 +4,40 @@ require_relative 'lib/active_record_orm'
 ENV['DEBUG'] = 'true'
 
 # open database connection
-DBConnection.open('db/cats.db')
+DBConnection.open('db/cats.sqlite3')
+
 
 # define cat model
-class Cat < SQLObject
-  my_attr_accessor :id, :name, :owner_id
+class Cat < ActiveRecordBase
+  # columns :id, :name, :owner_id
 
   belongs_to :human, foreign_key: :owner_id
   has_one_through :house, :human, :house
+
+  finalize!
 end
 
 # define human model
-class Human < SQLObject
+class Human < ActiveRecordBase
   table_name= 'humans' # example of overriding table name
-  my_attr_accessor :id, :fname, :lname, :house_id
+  # columns :id, :fname, :lname, :house_id
 
   has_many :cats, foreign_key: :owner_id
   belongs_to :house
+
+  finalize!
 end
 
 # define house model
-class House < SQLObject
-  my_attr_accessor :id, :address
-
+class House < ActiveRecordBase
+  # columns :id, :address
   # specify class_name, foreign_key, primary_key (defaults are identical in this case)
   has_many :humans,
     class_name: 'Humans',
     foreign_key: :house_id,
     primary_key: :id
+
+  finalize!
 end
 
 puts 'simply find queries:'
