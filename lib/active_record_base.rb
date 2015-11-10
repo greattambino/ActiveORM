@@ -41,13 +41,16 @@ class ActiveRecordBase
   end
 
   def self.all
-    results = DBConnection.execute(<<-SQL)
+    query = <<-SQL
       SELECT
         #{table_name}.*
       FROM
         #{table_name};
     SQL
 
+    puts "[QUERY] \n#{query}" if ENV['DEBUG']
+
+    results = DBConnection.execute(query)
     parse_all(results)
   end
 

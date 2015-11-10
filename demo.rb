@@ -19,8 +19,8 @@ end
 
 # define human model
 class Human < ActiveRecordBase
-  table_name= 'humans' # example of overriding table name
   # columns :id, :fname, :lname, :house_id
+  table_name= 'humans' # example of overriding table name
 
   has_many :cats, foreign_key: :owner_id
   belongs_to :house
